@@ -1,0 +1,3 @@
+# fjs-flashcards
+
+npm start
