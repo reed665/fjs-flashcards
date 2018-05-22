@@ -12,10 +12,10 @@ function addButton(dispatch) {
 
 function cardItem(dispatch, card) {
   return div({ className: 'bg-light-yellow relative shadow-4 w-30 pa3 ma2' }, [
-    i({ className: 'fa fa-times black-60 absolute top-1 right-1 pointer' }),
+    i({ className: 'fa fa-times black-60 absolute top-1 right-1 pointer dim' }),
     div({ className: 'f5 b underline mv1' }, 'Question'),
-    div(card.question),
-    div({ className: 'f5 b underline mt3 mb1 pointer' }, 'Show Answer'),
+    div({ className: 'dim pointer' }, card.question),
+    div({ className: 'f5 b underline mt3 mb1 pointer dim' }, 'Show Answer'),
     div(card.answer),
   ])
 }
