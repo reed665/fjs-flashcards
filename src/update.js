@@ -38,10 +38,10 @@ export function editModeMsg(cardId) {
   }
 }
 
-export function saveCardMsg(card) {
+export function saveCardMsg(cardId) {
   return {
     type: MSGS.SAVE_CARD,
-    card,
+    cardId,
   }
 }
 
@@ -81,7 +81,8 @@ export default function update(msg, model) {
       return { ...model, cards }
     }
     case MSGS.SAVE_CARD: {
-      return model
+      const cards = model.cards.map(card => card.id === msg.cardId ? { ...card, editMode: false } : card)
+      return { ...model, cards }
     }
     case MSGS.UPDATE_CARD_QUESTION: {
       const { cardId, question } = msg

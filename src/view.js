@@ -34,10 +34,10 @@ function removeButton(dispatch, cardId) {
   })
 }
 
-function saveButton(dispatch) {
+function saveButton(dispatch, cardId) {
   return a({
     className: 'f4 link dim ph3 pv2 mt3 dib white bg-green pointer',
-    onclick: e => console.log('TODO: save card'),
+    onclick: e => dispatch(saveCardMsg(cardId)),
   }, 'Save')
 }
 
@@ -57,7 +57,7 @@ function cardItem(dispatch, card) {
         rows: 5,
         oninput: e => dispatch(updateCardAnswerMsg(card.id, e.target.value)),
       }, card.answer),
-      saveButton(dispatch),
+      saveButton(dispatch, card.id),
     ])
   }
   return div({ className: 'bg-light-yellow relative shadow-4 w-30 pa3 ma2' }, [
