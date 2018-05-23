@@ -1,5 +1,4 @@
 export default {
-  editId: null,
   nextId: 5,
   cards: [
     {
@@ -7,24 +6,28 @@ export default {
       question: 'question #1',
       answer: 'answer #1',
       rank: 0,
+      editMode: false,
     },
     {
       id: 2,
       question: 'question #2',
       answer: 'answer #2',
       rank: 3,
+      editMode: false,
     },
     {
       id: 3,
       question: 'question #3',
       answer: 'answer #3',
       rank: 1,
+      editMode: false,
     },
     {
       id: 4,
       question: 'question #4',
       answer: 'answer #4',
       rank: 2,
+      editMode: false,
     },
   ]
 }

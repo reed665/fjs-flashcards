@@ -22,8 +22,8 @@ export function removeCardMsg(cardId) {
 export default function update(msg, model) {
   switch (msg.type) {
     case MSGS.ADD_CARD: {
-      const card = { ...msg.card, id: model.nextId, rank: 0 }
-      const cards = [ card, ...model.cards ]
+      const card = { ...msg.card, id: model.nextId, rank: 0, editMode: true }
+      const cards = [card, ...model.cards]
       return { ...model, nextId: model.nextId + 1, cards }
     }
     case MSGS.REMOVE_CARD: {

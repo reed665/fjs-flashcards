@@ -1,7 +1,7 @@
 import hh from 'hyperscript-helpers'
 import { h } from 'virtual-dom'
 
-const { div, h1, pre, a, i, span } = hh(h)
+const { div, h1, pre, a, i, span, textarea } = hh(h)
 
 import {
   sortCards,
@@ -29,7 +29,25 @@ function removeButton(dispatch, cardId) {
   })
 }
 
+function saveButton(dispatch) {
+  return a({
+    className: 'f4 link dim ph3 pv2 mt3 dib white bg-green pointer',
+    onclick: e => console.log('TODO: save card'),
+  }, 'Save')
+}
+
 function cardItem(dispatch, card) {
+  const { editMode } = card
+  if (editMode) {
+    return div({ className: 'bg-light-yellow relative shadow-4 w-30 pa3 ma2' }, [
+      removeButton(dispatch, card.id),
+      div({ className: 'f5 b underline mv1' }, 'Question'),
+      textarea({ rows: 5 }),
+      div({ className: 'f5 b underline mt3 mb1' }, 'Answer'),
+      textarea({ rows: 5 }),
+      saveButton(dispatch),
+    ])
+  }
   return div({ className: 'bg-light-yellow relative shadow-4 w-30 pa3 ma2' }, [
     removeButton(dispatch, card.id),
     div({ className: 'f5 b underline mv1' }, 'Question'),
