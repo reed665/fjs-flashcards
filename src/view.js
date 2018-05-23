@@ -3,10 +3,19 @@ import { h } from 'virtual-dom'
 
 const { div, h1, pre, a, i, span } = hh(h)
 
-import { sortCards } from './update'
+import {
+  sortCards,
+  addCardMsg,
+} from './update'
 
 function addButton(dispatch) {
-  return a({ className: 'f4 link dim ph3 pv2 mb3 ml2 dib white bg-green pointer'}, [
+  return a({
+    className: 'f4 link dim ph3 pv2 mb3 ml2 dib white bg-green pointer',
+    onclick: e => {
+      const card = { question: 'foo', answer: 'bar' }
+      dispatch(addCardMsg(card))
+    },
+  }, [
     i({ className: 'fa fa-plus mr2' }),
     span('Add Flashcard'),
   ])
