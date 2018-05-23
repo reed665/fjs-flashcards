@@ -9,6 +9,9 @@ import {
   removeCardMsg,
   toggleShowAnswerMsg,
   editModeMsg,
+  saveCardMsg,
+  updateCardQuestionMsg,
+  updateCardAnswerMsg,
 } from './update'
 
 function addButton(dispatch) {
@@ -44,9 +47,16 @@ function cardItem(dispatch, card) {
     return div({ className: 'bg-light-yellow relative shadow-4 w-30 pa3 ma2' }, [
       removeButton(dispatch, card.id),
       div({ className: 'f5 b underline mv1' }, 'Question'),
-      textarea({ rows: 5, autofocus: true }, card.question),
+      textarea({
+        rows: 5,
+        autofocus: true,
+        oninput: e => dispatch(updateCardQuestionMsg(card.id, e.target.value)),
+      }, card.question),
       div({ className: 'f5 b underline mt3 mb1' }, 'Answer'),
-      textarea({ rows: 5 }, card.answer),
+      textarea({
+        rows: 5,
+        oninput: e => dispatch(updateCardAnswerMsg(card.id, e.target.value)),
+      }, card.answer),
       saveButton(dispatch),
     ])
   }

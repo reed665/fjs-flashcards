@@ -5,6 +5,9 @@ const MSGS = {
   REMOVE_CARD: 'REMOVE_CARD',
   TOGGLE_SHOW_ANSWER: 'TOGGLE_SHOW_ANSWER',
   EDIT_MODE: 'EDIT_MODE',
+  SAVE_CARD: 'SAVE_CARD',
+  UPDATE_CARD_QUESTION: 'UPDATE_CARD_QUESTION',
+  UPDATE_CARD_ANSWER: 'UPDATE_CARD_ANSWER',
 }
 
 export function addCardMsg(card) {
@@ -35,6 +38,29 @@ export function editModeMsg(cardId) {
   }
 }
 
+export function saveCardMsg(card) {
+  return {
+    type: MSGS.SAVE_CARD,
+    card,
+  }
+}
+
+export function updateCardQuestionMsg(cardId, question) {
+  return {
+    type: MSGS.UPDATE_CARD_QUESTION,
+    cardId,
+    question,
+  }
+}
+
+export function updateCardAnswerMsg(cardId, answer) {
+  return {
+    type: MSGS.UPDATE_CARD_ANSWER,
+    cardId,
+    answer,
+  }
+}
+
 export default function update(msg, model) {
   switch (msg.type) {
     case MSGS.ADD_CARD: {
@@ -52,6 +78,19 @@ export default function update(msg, model) {
     }
     case MSGS.EDIT_MODE: {
       const cards = model.cards.map(card => card.id === msg.cardId ? { ...card, editMode: true } : card)
+      return { ...model, cards }
+    }
+    case MSGS.SAVE_CARD: {
+      return model
+    }
+    case MSGS.UPDATE_CARD_QUESTION: {
+      const { cardId, question } = msg
+      const cards = model.cards.map(card => card.id === cardId ? { ...card, question } : card)
+      return { ...model, cards }
+    }
+    case MSGS.UPDATE_CARD_ANSWER: {
+      const { cardId, answer } = msg
+      const cards = model.cards.map(card => card.id === cardId ? { ...card, answer } : card)
       return { ...model, cards }
     }
   }
