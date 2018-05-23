@@ -4,6 +4,7 @@ const MSGS = {
   ADD_CARD: 'ADD_CARD',
   REMOVE_CARD: 'REMOVE_CARD',
   TOGGLE_SHOW_ANSWER: 'TOGGLE_SHOW_ANSWER',
+  EDIT_MODE: 'EDIT_MODE',
 }
 
 export function addCardMsg(card) {
@@ -27,6 +28,13 @@ export function toggleShowAnswerMsg(cardId) {
   }
 }
 
+export function editModeMsg(cardId) {
+  return {
+    type: MSGS.EDIT_MODE,
+    cardId,
+  }
+}
+
 export default function update(msg, model) {
   switch (msg.type) {
     case MSGS.ADD_CARD: {
@@ -40,6 +48,10 @@ export default function update(msg, model) {
     }
     case MSGS.TOGGLE_SHOW_ANSWER: {
       const cards = model.cards.map(card => card.id === msg.cardId ? { ...card, showAnswerMode: !card.showAnswerMode } : card)
+      return { ...model, cards }
+    }
+    case MSGS.EDIT_MODE: {
+      const cards = model.cards.map(card => card.id === msg.cardId ? { ...card, editMode: true } : card)
       return { ...model, cards }
     }
   }

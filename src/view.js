@@ -8,6 +8,7 @@ import {
   addCardMsg,
   removeCardMsg,
   toggleShowAnswerMsg,
+  editModeMsg,
 } from './update'
 
 function addButton(dispatch) {
@@ -52,7 +53,10 @@ function cardItem(dispatch, card) {
   return div({ className: 'bg-light-yellow relative shadow-4 w-30 pa3 ma2' }, [
     removeButton(dispatch, card.id),
     div({ className: 'f5 b underline mv1' }, 'Question'),
-    div({ className: 'dim pointer' }, card.question),
+    div({
+      className: 'dim pointer',
+      onclick: e => dispatch(editModeMsg(card.id))
+    }, card.question),
     div({
       className: 'f5 b underline mt3 mb1 pointer dim',
       onclick: e => dispatch(toggleShowAnswerMsg(card.id)),
