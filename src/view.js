@@ -6,6 +6,7 @@ const { div, h1, pre, a, i, span } = hh(h)
 import {
   sortCards,
   addCardMsg,
+  removeCardMsg,
 } from './update'
 
 function addButton(dispatch) {
@@ -21,9 +22,16 @@ function addButton(dispatch) {
   ])
 }
 
+function removeButton(dispatch, cardId) {
+  return i({
+    className: 'fa fa-times black-60 absolute top-1 right-1 pointer dim',
+    onclick: e => dispatch(removeCardMsg(cardId))
+  })
+}
+
 function cardItem(dispatch, card) {
   return div({ className: 'bg-light-yellow relative shadow-4 w-30 pa3 ma2' }, [
-    i({ className: 'fa fa-times black-60 absolute top-1 right-1 pointer dim' }),
+    removeButton(dispatch, card.id),
     div({ className: 'f5 b underline mv1' }, 'Question'),
     div({ className: 'dim pointer' }, card.question),
     div({ className: 'f5 b underline mt3 mb1 pointer dim' }, 'Show Answer'),
