@@ -7,6 +7,7 @@ export default {
       answer: 'answer #1',
       rank: 0,
       editMode: false,
+      showAnswerMode: false,
     },
     {
       id: 2,
@@ -14,6 +15,7 @@ export default {
       answer: 'answer #2',
       rank: 3,
       editMode: false,
+      showAnswerMode: false,
     },
     {
       id: 3,
@@ -21,6 +23,7 @@ export default {
       answer: 'answer #3',
       rank: 1,
       editMode: false,
+      showAnswerMode: false,
     },
     {
       id: 4,
@@ -28,6 +31,7 @@ export default {
       answer: 'answer #4',
       rank: 2,
       editMode: false,
+      showAnswerMode: false,
     },
   ]
 }

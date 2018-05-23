@@ -7,13 +7,14 @@ import {
   sortCards,
   addCardMsg,
   removeCardMsg,
+  toggleShowAnswerMsg,
 } from './update'
 
 function addButton(dispatch) {
   return a({
     className: 'f4 link dim ph3 pv2 mb3 ml2 dib white bg-green pointer',
     onclick: e => {
-      const card = { question: 'foo', answer: 'bar' }
+      const card = { question: '', answer: '' }
       dispatch(addCardMsg(card))
     },
   }, [
@@ -42,9 +43,9 @@ function cardItem(dispatch, card) {
     return div({ className: 'bg-light-yellow relative shadow-4 w-30 pa3 ma2' }, [
       removeButton(dispatch, card.id),
       div({ className: 'f5 b underline mv1' }, 'Question'),
-      textarea({ rows: 5 }),
+      textarea({ rows: 5, autofocus: true }, card.question),
       div({ className: 'f5 b underline mt3 mb1' }, 'Answer'),
-      textarea({ rows: 5 }),
+      textarea({ rows: 5 }, card.answer),
       saveButton(dispatch),
     ])
   }
@@ -52,8 +53,11 @@ function cardItem(dispatch, card) {
     removeButton(dispatch, card.id),
     div({ className: 'f5 b underline mv1' }, 'Question'),
     div({ className: 'dim pointer' }, card.question),
-    div({ className: 'f5 b underline mt3 mb1 pointer dim' }, 'Show Answer'),
-    div(card.answer),
+    div({
+      className: 'f5 b underline mt3 mb1 pointer dim',
+      onclick: e => dispatch(toggleShowAnswerMsg(card.id)),
+    }, 'Show Answer'),
+    card.showAnswerMode ? div(card.answer) : null,
   ])
 }
 
