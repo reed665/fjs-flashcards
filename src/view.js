@@ -3,6 +3,8 @@ import { h } from 'virtual-dom'
 
 const { div, h1, pre, a, i, span } = hh(h)
 
+import { sortCards } from './update'
+
 function addButton(dispatch) {
   return a({ className: 'f4 link dim ph3 pv2 mb3 ml2 dib white bg-green pointer'}, [
     i({ className: 'fa fa-plus mr2' }),
@@ -21,7 +23,8 @@ function cardItem(dispatch, card) {
 }
 
 function cardList(dispatch, model) {
-  const cards = model.cards.map(card => cardItem(dispatch, card))
+  const sorted = sortCards(model.cards)
+  const cards = sorted.map(card => cardItem(dispatch, card))
   return div({ className: 'flex flex-wrap' }, cards)
 }
 
