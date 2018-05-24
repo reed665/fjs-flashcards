@@ -78,6 +78,12 @@ const updateRank = (prevRank, feedback) => {
   }
 }
 
+const addCard = (cards, card, toStart = true) => {
+  return toStart
+    ? [card, ...cards]
+    : [...cards, card]
+}
+
 const removeCard = (cards, cardId) => cards.filter(card => card.id !== cardId)
 
 const updateCard = (cards, cardId, update) => {
@@ -94,7 +100,7 @@ export default function update(msg, model) {
   switch (msg.type) {
     case MSGS.ADD_CARD: {
       const card = { ...msg.card, id: model.nextId, rank: 0, editMode: true, showAnswerMode: false }
-      const cards = [card, ...model.cards]
+      const cards = addCard(model.cards, card)
       return { ...model, nextId: model.nextId + 1, cards }
     }
     case MSGS.REMOVE_CARD: {
