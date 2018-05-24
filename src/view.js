@@ -1,7 +1,7 @@
 import hh from 'hyperscript-helpers'
 import { h } from 'virtual-dom'
 
-const { div, h1, pre, a, i, span, textarea, button } = hh(h)
+const { div, h1, pre, a, i, span, textarea, button, p } = hh(h)
 
 import {
   sortCards,
@@ -118,9 +118,11 @@ function cardList(dispatch, model) {
 
 export default function view(dispatch, model) {
   return div({ className: 'mw8 center' }, [
-    h1({ className: 'f2 pv2 bb' }, 'Flashcards'),
+    h1({ className: 'f2 pa2 bb' }, 'Flashcards'),
     addButton(dispatch),
-    cardList(dispatch, model),
+    model.cards.length
+      ? cardList(dispatch, model)
+      : p({ className: 'f4 black-50 ma2 i' }, 'No cards here but you can add some...'),
     // pre(JSON.stringify(model, null, 2)),
   ])
 }
