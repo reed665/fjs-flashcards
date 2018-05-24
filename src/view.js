@@ -12,6 +12,7 @@ import {
   saveCardMsg,
   updateCardQuestionMsg,
   updateCardAnswerMsg,
+  updateCardRankMsg,
 } from './update'
 
 const saveDisabled = card => !card.question || !card.answer
@@ -62,7 +63,7 @@ function cardEditMode(dispatch, card) {
   ])
 }
 
-function answerBlock(dispatch, answer) {
+function answerBlock(dispatch, { answer, id: cardId }) {
   return div({
     className: 'flex flex-column',
   }, [
@@ -72,15 +73,15 @@ function answerBlock(dispatch, answer) {
     }, [
       button({
         className: 'f4 pv1 ph3 bn br1 pointer dim white bg-red',
-        onclick: e => console.log('TODO: update card rank [bad answer]')
+        onclick: e => dispatch(updateCardRankMsg(cardId, 'bad')),
       }, 'Bad'),
       button({
         className: 'f4 pv1 ph3 bn br1 pointer dim white bg-blue',
-        onclick: e => console.log('TODO: update card rank [good answer]')
+        onclick: e => dispatch(updateCardRankMsg(cardId, 'good')),
       }, 'Good'),
       button({
         className: 'f4 pv1 ph3 bn br1 pointer dim white bg-green',
-        onclick: e => console.log('TODO: update card rank [great answer]')
+        onclick: e => dispatch(updateCardRankMsg(cardId, 'great')),
       }, 'Great'),
     ])
   ])
@@ -98,7 +99,7 @@ function cardDefaultMode(dispatch, card) {
       className: 'f5 b underline mt3 mb1 pointer dim',
       onclick: e => dispatch(toggleShowAnswerMsg(card.id)),
     }, 'Show Answer'),
-    card.showAnswerMode ? answerBlock(dispatch, card.answer) : null,
+    card.showAnswerMode ? answerBlock(dispatch, card) : null,
   ])
 }
 
@@ -120,6 +121,6 @@ export default function view(dispatch, model) {
     h1({ className: 'f2 pv2 bb' }, 'Flashcards'),
     addButton(dispatch),
     cardList(dispatch, model),
-    pre(JSON.stringify(model, null, 2)),
+    // pre(JSON.stringify(model, null, 2)),
   ])
 }

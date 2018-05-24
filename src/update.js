@@ -8,6 +8,7 @@ const MSGS = {
   SAVE_CARD: 'SAVE_CARD',
   UPDATE_CARD_QUESTION: 'UPDATE_CARD_QUESTION',
   UPDATE_CARD_ANSWER: 'UPDATE_CARD_ANSWER',
+  UPDATE_CARD_RANK: 'UPDATE_CARD_RANK',
 }
 
 export function addCardMsg(card) {
@@ -61,6 +62,22 @@ export function updateCardAnswerMsg(cardId, answer) {
   }
 }
 
+export function updateCardRankMsg(cardId, feedback) {
+  return {
+    type: MSGS.UPDATE_CARD_RANK,
+    cardId,
+    feedback,
+  }
+}
+
+const updateRank = (prevRank, feedback) => {
+  switch (feedback) {
+    case 'bad': return 0
+    case 'good': return prevRank + 1
+    case 'great': return prevRank + 2
+  }
+}
+
 export default function update(msg, model) {
   switch (msg.type) {
     case MSGS.ADD_CARD: {
@@ -92,6 +109,15 @@ export default function update(msg, model) {
     case MSGS.UPDATE_CARD_ANSWER: {
       const { cardId, answer } = msg
       const cards = model.cards.map(card => card.id === cardId ? { ...card, answer } : card)
+      return { ...model, cards }
+    }
+    case MSGS.UPDATE_CARD_RANK: {
+      const { cardId, feedback } = msg
+      const cards = model.cards.map(card => {
+        if (card.id !== cardId) return card
+        const rank = updateRank(card.rank, feedback)
+        return { ...card, rank, showAnswerMode: false }
+      })
       return { ...model, cards }
     }
   }
