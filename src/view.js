@@ -62,6 +62,30 @@ function cardEditMode(dispatch, card) {
   ])
 }
 
+function answerBlock(dispatch, answer) {
+  return div({
+    className: 'flex flex-column',
+  }, [
+    answer,
+    div({
+      className: 'mt3 flex justify-between',
+    }, [
+      button({
+        className: 'f4 pv1 ph3 bn br1 pointer dim white bg-red',
+        onclick: e => console.log('TODO: update card rank [bad answer]')
+      }, 'Bad'),
+      button({
+        className: 'f4 pv1 ph3 bn br1 pointer dim white bg-blue',
+        onclick: e => console.log('TODO: update card rank [good answer]')
+      }, 'Good'),
+      button({
+        className: 'f4 pv1 ph3 bn br1 pointer dim white bg-green',
+        onclick: e => console.log('TODO: update card rank [great answer]')
+      }, 'Great'),
+    ])
+  ])
+}
+
 function cardDefaultMode(dispatch, card) {
   return div({ className: 'bg-light-yellow relative shadow-4 w-30 pa3 ma2' }, [
     removeButton(dispatch, card.id),
@@ -74,7 +98,7 @@ function cardDefaultMode(dispatch, card) {
       className: 'f5 b underline mt3 mb1 pointer dim',
       onclick: e => dispatch(toggleShowAnswerMsg(card.id)),
     }, 'Show Answer'),
-    card.showAnswerMode ? div(card.answer) : null,
+    card.showAnswerMode ? answerBlock(dispatch, card.answer) : null,
   ])
 }
 
