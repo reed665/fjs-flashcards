@@ -1,35 +1,11 @@
 export default {
-  nextId: 5,
+  nextId: 2,
   cards: [
     {
       id: 1,
-      question: 'question #1',
-      answer: 'answer #1',
+      question: 'What is a pure function?',
+      answer: 'It is a function that returns a value, based on it\'s input and causes no side effects',
       rank: 0,
-      editMode: false,
-      showAnswerMode: false,
-    },
-    {
-      id: 2,
-      question: 'question #2',
-      answer: 'answer #2',
-      rank: 3,
-      editMode: false,
-      showAnswerMode: false,
-    },
-    {
-      id: 3,
-      question: 'question #3',
-      answer: 'answer #3',
-      rank: 1,
-      editMode: false,
-      showAnswerMode: false,
-    },
-    {
-      id: 4,
-      question: 'question #4',
-      answer: 'answer #4',
-      rank: 2,
       editMode: false,
       showAnswerMode: false,
     },
