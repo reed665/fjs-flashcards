@@ -1,7 +1,7 @@
 import hh from 'hyperscript-helpers'
 import { h } from 'virtual-dom'
 
-const { div, h1, pre, a, i, span, textarea } = hh(h)
+const { div, h1, pre, a, i, span, textarea, button } = hh(h)
 
 import {
   sortCards,
@@ -13,6 +13,8 @@ import {
   updateCardQuestionMsg,
   updateCardAnswerMsg,
 } from './update'
+
+const saveDisabled = card => !card.question || !card.answer
 
 function addButton(dispatch) {
   return a({
@@ -34,10 +36,11 @@ function removeButton(dispatch, cardId) {
   })
 }
 
-function saveButton(dispatch, cardId) {
-  return a({
-    className: 'f4 link dim ph3 pv2 mt3 dib white bg-green pointer',
-    onclick: e => dispatch(saveCardMsg(cardId)),
+function saveButton(dispatch, card) {
+  return button({
+    className: 'f4 ph3 pv2 mt3',
+    disabled: saveDisabled(card),
+    onclick: e => dispatch(saveCardMsg(card.id)),
   }, 'Save')
 }
 
@@ -57,7 +60,7 @@ function cardItem(dispatch, card) {
         rows: 5,
         oninput: e => dispatch(updateCardAnswerMsg(card.id, e.target.value)),
       }, card.answer),
-      saveButton(dispatch, card.id),
+      saveButton(dispatch, card),
     ])
   }
   return div({ className: 'bg-light-yellow relative shadow-4 w-30 pa3 ma2' }, [
