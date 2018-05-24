@@ -78,8 +78,17 @@ const updateRank = (prevRank, feedback) => {
   }
 }
 
-// returns array of cards
 const removeCard = (cards, cardId) => cards.filter(card => card.id !== cardId)
+
+const updateCard = (cards, cardId, update) => {
+  return cards.map(card => {
+    if (card.id !== cardId) return card
+    if (typeof update === 'function') {
+      return update(card)
+    }
+    return { ...card, ...update }
+  })
+}
 
 export default function update(msg, model) {
   switch (msg.type) {
@@ -93,31 +102,30 @@ export default function update(msg, model) {
       return { ...model, cards }
     }
     case MSGS.TOGGLE_SHOW_ANSWER: {
-      const cards = model.cards.map(card => card.id === msg.cardId ? { ...card, showAnswerMode: !card.showAnswerMode } : card)
+      const cards = updateCard(model.cards, msg.cardId, card => ({ ...card, showAnswerMode: !card.showAnswerMode }))
       return { ...model, cards }
     }
     case MSGS.EDIT_MODE: {
-      const cards = model.cards.map(card => card.id === msg.cardId ? { ...card, editMode: true } : card)
+      const cards = updateCard(model.cards, msg.cardId, { editMode: true })
       return { ...model, cards }
     }
     case MSGS.SAVE_CARD: {
-      const cards = model.cards.map(card => card.id === msg.cardId ? { ...card, editMode: false } : card)
+      const cards = updateCard(model.cards, msg.cardId, { editMode: false })
       return { ...model, cards }
     }
     case MSGS.UPDATE_CARD_QUESTION: {
       const { cardId, question } = msg
-      const cards = model.cards.map(card => card.id === cardId ? { ...card, question } : card)
+      const cards = updateCard(model.cards, cardId, { question })
       return { ...model, cards }
     }
     case MSGS.UPDATE_CARD_ANSWER: {
       const { cardId, answer } = msg
-      const cards = model.cards.map(card => card.id === cardId ? { ...card, answer } : card)
+      const cards = updateCard(model.cards, cardId, { answer })
       return { ...model, cards }
     }
     case MSGS.UPDATE_CARD_RANK: {
       const { cardId, feedback } = msg
-      const cards = model.cards.map(card => {
-        if (card.id !== cardId) return card
+      const cards = updateCard(model.cards, cardId, card => {
         const rank = updateRank(card.rank, feedback)
         return { ...card, rank, showAnswerMode: false }
       })
