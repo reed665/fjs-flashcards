@@ -67,7 +67,10 @@ function answerBlock(dispatch, { answer, id: cardId }) {
   return div({
     className: 'flex flex-column',
   }, [
-    answer,
+    div({
+      className: 'dim pointer',
+      onclick: e => dispatch(editModeMsg(cardId)),
+    }, answer),
     div({
       className: 'mt3 flex justify-between',
     }, [
